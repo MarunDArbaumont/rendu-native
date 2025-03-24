@@ -42,6 +42,7 @@ export default function Index() {
     <View style={styles.task}>
       <Text style={item?.is_toggle && { textDecorationLine: 'line-through' }} >{item?.title}</Text>
       <Text style={item?.is_toggle && { textDecorationLine: 'line-through' }}>{item?.description}</Text>
+      <Text style={item?.is_toggle && { textDecorationLine: 'line-through' }}>{item?.category}</Text>
       {/* <Text>{item.description}</Text> */}
       <View style={styles.buttonGroup}>
         <TouchableOpacity onPress={toggleTask} style={styles.button}>

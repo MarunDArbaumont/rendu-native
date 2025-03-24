@@ -12,6 +12,7 @@ const AddTask = () => {
 
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
+    const [category, setCategory] = useState("")
 
     const onValidTask = useCallback(() => {
 
@@ -21,6 +22,7 @@ const AddTask = () => {
             id: "'id" + taskList.length + 1,
             title,
             description,
+            category,
             is_toggle: false
         }
 
@@ -49,6 +51,15 @@ const AddTask = () => {
                         placeholder="Description"
                         value={description}
                         onChangeText={setDescription}
+                    />
+                </View>
+                <View>
+                    <Text>Category</Text>
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder="Category"
+                        value={category}
+                        onChangeText={setCategory}
                     />
                 </View>
                 <TouchableOpacity onPress={onValidTask} style={styles.button}>

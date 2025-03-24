@@ -23,10 +23,10 @@ export default function RootLayout() {
             }}
           />
           <Tabs.Screen
-            name="settings/index"
+            name="category/index"
             options={{
-              title: 'Settings',
-              tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+              title: 'Category',
+              tabBarIcon: ({ color }) => <FontAwesome size={28} name="map" color={color} />,
             }}
           />
         </Tabs>

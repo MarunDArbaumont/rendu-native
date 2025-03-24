@@ -4,6 +4,7 @@ export type TTask = {
     id: string;
     title: string;
     description: string;
+    category: string;
     is_toggle: boolean;
 }
 
@@ -18,20 +19,23 @@ type TTaskContext = {
 const initTaskList: TTask[] = [
     {
         id: "1",
-        title: "Task 1",
-        description: "Description 1",
+        title: "Clean the floor",
+        description: "Take a mop and clean the floor",
+        category: "Clean",
         is_toggle: false,
     },
     {
         id: "2",
-        title: "Task 2",
-        description: "Description 2",
+        title: "Clean toilet",
+        description: "Take a toothbrush and clean the toilet",
+        category: "Clean",
         is_toggle: false,
     },
     {
         id: "3",
-        title: "Task 3",
-        description: "Description 3",
+        title: "Make diner",
+        description: "Make diner",
+        category: "Food",
         is_toggle: false,
     },
 ]

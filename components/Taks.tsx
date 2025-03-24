@@ -1,10 +1,9 @@
-import { TTask, useTasksContext } from "@/provider/TaskProvider"
-import { router, useLocalSearchParams } from "expo-router"
-import { useEffect, useState } from "react"
-import { Text, TouchableOpacity, View, StyleSheet } from "react-native"
+import { TTask, useTasksContext } from "@/provider/TaskProvider";
+import { useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
+import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 
-const Category = () => {
-
+export const Task = ({ item }: { item: TTask }) => {
     const {
         taskList,
         toggleTaskCompletion,
@@ -17,9 +16,9 @@ const Category = () => {
 
     useEffect(() => {
 
-        if (!params.category || !taskList) return
+        if (!params.id || !taskList) return
 
-        const task = taskList.find((task) => task.category === params.category)
+        const task = taskList.find((task) => task.id === params.id)
         setTask(task)
     }, [taskList, params])
 
@@ -33,31 +32,26 @@ const Category = () => {
         if (!task) return
 
         deleteTask(task.id)
-
-        router.navigate('/category/[category]')
-    }
-
-    const goBack = () => {
-        router.navigate("/")
     }
 
     return (
-        <View>
-            <Text style={task?.is_toggle && { textDecorationLine: 'line-through' }} >{task?.title}</Text>
-            <Text style={task?.is_toggle && { textDecorationLine: 'line-through' }}>{task?.description}</Text>
+        <View style={styles.task}>
+            <Text style={item?.is_toggle && { textDecorationLine: 'line-through' }} >{item?.title}</Text>
+            <Text style={item?.is_toggle && { textDecorationLine: 'line-through' }}>{item?.description}</Text>
+            <Text style={item?.is_toggle && { textDecorationLine: 'line-through' }}>{item?.category}</Text>
             {/* <Text>{item.description}</Text> */}
             <View style={styles.buttonGroup}>
                 <TouchableOpacity onPress={toggleTask} style={styles.button}>
-                    <Text>Toggle/Untoggle</Text>
+                    <Text>Complete</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={onDeleteTask} style={styles.button}>
                     <Text>Delete task</Text>
                 </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={goBack} style={styles.button}><Text>Go back</Text></TouchableOpacity>
         </View>
-    )
+    );
 }
+
 const styles = StyleSheet.create({
     task: {
         flex: 1,
@@ -90,5 +84,4 @@ const styles = StyleSheet.create({
     }
 });
 
-
-export default Category
+export default Task;
