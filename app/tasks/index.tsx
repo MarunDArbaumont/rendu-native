@@ -20,11 +20,10 @@ const AddTask = () => {
         if (!title || !description || !category) return
 
         const newTask = {
-            id: "'id" + (taskList.length + 1),
+            id: taskList.length + 1,
             title,
             description,
             category,
-            is_toggle: false
         }
 
         addTask(newTask)

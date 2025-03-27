@@ -23,13 +23,15 @@ const AllCategory = () => {
 const styles = StyleSheet.create({
     text: {
         fontSize: 16,
+        textTransform: "capitalize",
     },
     title: {
         fontSize: 30
     },
     container: {
         flex: 1,
-        padding: 5
+        padding: 5,
+        width: "100%",
     },
     category: {
         flex: 1,

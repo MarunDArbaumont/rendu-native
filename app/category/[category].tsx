@@ -6,7 +6,7 @@ import { Text, TouchableOpacity, View, StyleSheet } from "react-native"
 
 const Category = () => {
 
-    const { taskList } = useTasksContext()
+    const { taskList, deleteTask } = useTasksContext()
 
     const params = useLocalSearchParams()
 
@@ -28,30 +28,38 @@ const Category = () => {
         <View
             style={styles.view}
         >
+            <Text style={styles.title}>{params.category}</Text>
+            <TouchableOpacity onPress={goBack} style={styles.button}>
+                <Text>Go back</Text>
+            </TouchableOpacity>
             <View style={styles.listStyle}>
                 {categoryTasks.length > 0 ? (
-                    categoryTasks.map((task) => <Task key={task.id} item={task} />)
+                    categoryTasks.map((task) => <Task key={task.id} item={task} deleteTask={deleteTask} />)
                 ) : (
                     <Text>No tasks found for this category</Text>
                 )}
             </View>
-            <TouchableOpacity onPress={goBack} style={styles.button}>
-                <Text>Go back</Text>
-            </TouchableOpacity>
+
         </View>
     )
 
 }
 const styles = StyleSheet.create({
+    title: {
+        fontSize: 30,
+        textTransform: "capitalize",
+    },
     view: {
         flex: 1,
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "flex-start",
+        width: "100%",
+        paddingVertical: 16,
+        paddingHorizontal: 8,
     },
     listStyle: {
         flex: 1,
         gap: 5,
-        padding: 10,
     },
     button: {
         width: 100,

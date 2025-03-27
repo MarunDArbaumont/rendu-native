@@ -9,7 +9,6 @@ export default function Index() {
 
   const {
     taskList,
-    toggleTaskCompletion,
     deleteTask,
   } = useTasksContext()
 
@@ -21,7 +20,7 @@ export default function Index() {
 
     if (!params.id || !taskList) return
 
-    const task = taskList.find((task) => task.id === params.id)
+    const task = taskList.find((task) => task.id.toString() === params.id)
     setTask(task)
   }, [taskList, params])
 
@@ -32,7 +31,7 @@ export default function Index() {
       <FlatList
         style={styles.listStyle}
         data={taskList}
-        renderItem={({ item }) => <Task item={item} />}
+        renderItem={({ item }) => <Task item={item} deleteTask={deleteTask} />}
         keyExtractor={(item) => item.id.toString()}
       />
 
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
   view: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-start",
   },
   task: {
     flex: 1,

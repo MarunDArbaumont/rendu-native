@@ -2,74 +2,61 @@ import { TTask, useTasksContext } from "@/provider/TaskProvider";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
-import Animated, { useSharedValue } from "react-native-reanimated";
+import Animated, { runOnUI, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
-export const Task = ({ item }: { item: TTask | undefined }) => {
+const AnimatedView = Animated.createAnimatedComponent(View);
 
+export const Task = ({ item, deleteTask }: { item: TTask | undefined; deleteTask: (id: number) => void }) => {
 
-    const width = useSharedValue(100);
-    const height = useSharedValue(100);
+    const offset = useSharedValue<number>(0);
 
-    const deletedAnimation = () => {
-        console.log("task deleted")
-        width.value = width.value - 100
-    }
+    const style = useAnimatedStyle(() => ({
+        transform: [{ translateX: offset.value }],
+    }));
 
+    const OFFSET = 400;
 
-    const {
-        taskList,
-        toggleTaskCompletion,
-        deleteTask,
-    } = useTasksContext()
-
-    const params = useLocalSearchParams()
-
-    const [task, setTask] = useState<TTask | undefined>(undefined)
-
-    useEffect(() => {
-
-        if (!params.id || !taskList) return
-
-        const task = taskList.find((task) => task.id === params.id)
-        setTask(task)
-    }, [taskList, params])
-
-    const toggleTask = () => {
-        if (!task) return
-        toggleTaskCompletion(task.id)
-        console.log("Yo")
-    }
+    const deleteAnimation = () => {
+        'worklet';
+        offset.value = withTiming(OFFSET);
+    };
 
     const onDeleteTask = () => {
-        if (!task) return
-        deletedAnimation()
-        deleteTask(task.id)
-    }
-
+        if (!item) return;
+        deleteAnimation();
+        setTimeout(() => {
+            console.log("Deleted retardée d'une seconde.");
+            deleteTask(item.id);
+        }, 500);
+    };
+    useEffect(() => {
+        runOnUI(deleteAnimation)
+    })
     return (
-        <View style={styles.task}>
-            <Text style={styles.text} >{item?.title}</Text>
+        <AnimatedView style={[styles.task, style]}>
+            <Text style={styles.text}>{item?.title}</Text>
             <Text style={styles.text}>{item?.description}</Text>
-            <Text style={styles.text}>{item?.category}</Text>
+            <Text style={[styles.text, styles.category]}>{item?.category}</Text>
             <View style={styles.buttonGroup}>
-                <TouchableOpacity onPress={toggleTask} style={styles.button}>
-                    <Text style={styles.text}>Complete</Text>
-                </TouchableOpacity>
                 <TouchableOpacity onPress={onDeleteTask} style={styles.button}>
                     <Text style={styles.text}>Delete task</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </AnimatedView>
     );
-}
+};
+
 
 const styles = StyleSheet.create({
     text: {
         fontSize: 16,
     },
+    category: {
+        textTransform: "capitalize",
+    },
     task: {
         maxHeight: 130,
-        width: "100%",
+        width: 350,
         flex: 1,
         padding: 10,
         marginBottom: 5,

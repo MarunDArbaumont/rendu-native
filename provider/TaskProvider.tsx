@@ -1,42 +1,36 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-
 export type TTask = {
-    id: string;
+    id: number;
     title: string;
     description: string;
     category: string;
-    is_toggle: boolean;
+
 }
 
 type TTaskContext = {
     taskList: TTask[];
     addTask: (task: TTask) => void;
-    removeTask: (id: string) => void;
-    toggleTaskCompletion: (id: string) => void;
-    deleteTask: (id: string) => void;
+    deleteTask: (id: number) => void;
 }
 
 const initTaskList: TTask[] = [
     {
-        id: "1",
+        id: 1,
         title: "Clean the floor",
         description: "Take a mop and clean the floor",
         category: "clean",
-        is_toggle: false,
     },
     {
-        id: "2",
+        id: 2,
         title: "Clean toilet",
         description: "Take a toothbrush and clean the toilet",
         category: "other",
-        is_toggle: false,
     },
     {
-        id: "3",
+        id: 3,
         title: "Make diner",
         description: "Make diner",
         category: "food",
-        is_toggle: false,
     },
 ]
 
@@ -49,19 +43,9 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setTasks([...taskList, task]);
     };
 
-    const removeTask = (id: string) => {
-        setTasks(taskList.filter(task => task.id !== id));
-    };
-
-    const toggleTaskCompletion = (id: string) => {
-        setTasks(prevTasks =>
-            prevTasks.map(task =>
-                task.id === id ? { ...task, is_toggle: !task.is_toggle } : task
-            )
-        );
-    };
-
-    const deleteTask = (id: string) => {
+    const deleteTask = (id: number) => {
+        console.log("Deleting Task ID:", id);
+        console.log("Current Tasks:", taskList);
         setTasks(prevTasks => prevTasks.filter(task => task.id !== id));
     };
 
@@ -72,7 +56,7 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
 
     return (
-        <TaskContext.Provider value={{ taskList, addTask, removeTask, toggleTaskCompletion, deleteTask }}>
+        <TaskContext.Provider value={{ taskList, addTask, deleteTask }}>
             {children}
         </TaskContext.Provider>
     );
