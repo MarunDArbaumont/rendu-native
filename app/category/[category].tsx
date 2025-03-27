@@ -21,7 +21,7 @@ const Category = () => {
     }, [taskList, JSON.stringify(params)])
 
     const goBack = () => {
-        router.navigate("/")
+        router.navigate("/category")
     }
 
     return (

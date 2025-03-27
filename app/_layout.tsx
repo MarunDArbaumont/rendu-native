@@ -29,6 +29,12 @@ export default function RootLayout() {
               tabBarIcon: ({ color }) => <FontAwesome size={28} name="map" color={color} />,
             }}
           />
+          <Tabs.Screen
+            name="category/[category]"
+            options={{
+              tabBarButton: () => null
+            }}
+          />
         </Tabs>
       </TaskProvider>
     </SafeAreaView>

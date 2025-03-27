@@ -2,7 +2,7 @@ import Task from "@/components/Taks";
 import { TTask, useTasksContext } from "@/provider/TaskProvider";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { FlatList, Text, TouchableOpacity, View, StyleSheet } from "react-native";
+import { FlatList, View, StyleSheet } from "react-native";
 
 export default function Index() {
 
