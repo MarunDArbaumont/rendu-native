@@ -1,3 +1,4 @@
+import Task from "@/components/Taks"
 import { TTask, useTasksContext } from "@/provider/TaskProvider"
 import { router, useLocalSearchParams } from "expo-router"
 import { useEffect, useState } from "react"
@@ -5,60 +6,48 @@ import { Text, TouchableOpacity, View, StyleSheet } from "react-native"
 
 const Category = () => {
 
-    const {
-        taskList,
-        toggleTaskCompletion,
-        deleteTask,
-    } = useTasksContext()
+    const { taskList } = useTasksContext()
 
     const params = useLocalSearchParams()
 
-    const [task, setTask] = useState<TTask | undefined>(undefined)
+    const [categoryTasks, setCategoryTasks] = useState<TTask[]>([])
 
     useEffect(() => {
 
         if (!params.category || !taskList) return
 
-        const task = taskList.find((task) => task.category === params.category)
-        setTask(task)
-    }, [taskList, params])
-
-    const toggleTask = () => {
-        if (!task) return
-
-        toggleTaskCompletion(task.id)
-    }
-
-    const onDeleteTask = () => {
-        if (!task) return
-
-        deleteTask(task.id)
-
-        router.navigate('/category/[category]')
-    }
+        const filteredTasks = taskList.filter((task) => task.category === params.category)
+        setCategoryTasks(filteredTasks)
+    }, [taskList, JSON.stringify(params)])
 
     const goBack = () => {
         router.navigate("/")
     }
 
     return (
-        <View>
-            <Text style={task?.is_toggle && { textDecorationLine: 'line-through' }} >{task?.title}</Text>
-            <Text style={task?.is_toggle && { textDecorationLine: 'line-through' }}>{task?.description}</Text>
-            {/* <Text>{item.description}</Text> */}
-            <View style={styles.buttonGroup}>
-                <TouchableOpacity onPress={toggleTask} style={styles.button}>
-                    <Text>Toggle/Untoggle</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={onDeleteTask} style={styles.button}>
-                    <Text>Delete task</Text>
-                </TouchableOpacity>
+        <View
+            style={styles.view}
+        >
+            <View style={styles.listStyle}>
+                {categoryTasks.length > 0 ? (
+                    categoryTasks.map((task) => <Task key={task.id} item={task} />)
+                ) : (
+                    <Text>No tasks found for this category</Text>
+                )}
             </View>
-            <TouchableOpacity onPress={goBack} style={styles.button}><Text>Go back</Text></TouchableOpacity>
+            <TouchableOpacity onPress={goBack} style={styles.button}>
+                <Text>Go back</Text>
+            </TouchableOpacity>
         </View>
     )
+
 }
 const styles = StyleSheet.create({
+    view: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
     task: {
         flex: 1,
         padding: 10,

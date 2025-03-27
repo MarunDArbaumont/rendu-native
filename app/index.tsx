@@ -1,3 +1,4 @@
+import Task from "@/components/Taks";
 import { TTask, useTasksContext } from "@/provider/TaskProvider";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
@@ -23,50 +24,14 @@ export default function Index() {
     setTask(task)
   }, [taskList, params])
 
-  const toggleTask = () => {
-    if (!task) return
-
-    toggleTaskCompletion(task.id)
-  }
-
-  const onDeleteTask = () => {
-    if (!task) return
-
-    deleteTask(task.id)
-  }
-
-
-
-
-  const renderItem = ({ item }: { item: TTask }) => (
-    <View style={styles.task}>
-      <Text style={item?.is_toggle && { textDecorationLine: 'line-through' }} >{item?.title}</Text>
-      <Text style={item?.is_toggle && { textDecorationLine: 'line-through' }}>{item?.description}</Text>
-      <Text style={item?.is_toggle && { textDecorationLine: 'line-through' }}>{item?.category}</Text>
-      {/* <Text>{item.description}</Text> */}
-      <View style={styles.buttonGroup}>
-        <TouchableOpacity onPress={toggleTask} style={styles.button}>
-          <Text>Complete</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onDeleteTask} style={styles.button}>
-          <Text>Delete task</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-
   return (
     <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+      style={styles.view}
     >
       <FlatList
         style={styles.listStyle}
         data={taskList}
-        renderItem={renderItem}
+        renderItem={({ item }) => <Task item={item} />}
         keyExtractor={(item) => item.id.toString()}
       />
     </View>
@@ -74,6 +39,11 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
+  view: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   task: {
     flex: 1,
     padding: 10,

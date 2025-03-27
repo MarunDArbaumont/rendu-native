@@ -3,7 +3,7 @@ import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 
-export const Task = ({ item }: { item: TTask }) => {
+export const Task = ({ item }: { item: TTask | undefined }) => {
     const {
         taskList,
         toggleTaskCompletion,
@@ -39,7 +39,6 @@ export const Task = ({ item }: { item: TTask }) => {
             <Text style={item?.is_toggle && { textDecorationLine: 'line-through' }} >{item?.title}</Text>
             <Text style={item?.is_toggle && { textDecorationLine: 'line-through' }}>{item?.description}</Text>
             <Text style={item?.is_toggle && { textDecorationLine: 'line-through' }}>{item?.category}</Text>
-            {/* <Text>{item.description}</Text> */}
             <View style={styles.buttonGroup}>
                 <TouchableOpacity onPress={toggleTask} style={styles.button}>
                     <Text>Complete</Text>
