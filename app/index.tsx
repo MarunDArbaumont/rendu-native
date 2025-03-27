@@ -1,3 +1,4 @@
+import Dropdown from "@/components/DropdownCategory";
 import Task from "@/components/Taks";
 import { TTask, useTasksContext } from "@/provider/TaskProvider";
 import { useLocalSearchParams } from "expo-router";
@@ -34,6 +35,7 @@ export default function Index() {
         renderItem={({ item }) => <Task item={item} />}
         keyExtractor={(item) => item.id.toString()}
       />
+
     </View>
   );
 }

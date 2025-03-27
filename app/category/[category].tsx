@@ -48,18 +48,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    task: {
-        flex: 1,
-        padding: 10,
-        marginBottom: 5,
-        marginTop: 5,
-        gap: 5,
-        backgroundColor: '#fff',
-        justifyContent: 'center',
-        borderWidth: 1,
-        borderRadius: 10,
-        borderColor: 'black',
-    },
     listStyle: {
         flex: 1,
         gap: 5,
@@ -72,10 +60,6 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         borderRadius: 20,
         alignItems: 'center',
-    },
-    buttonGroup: {
-        flexDirection: 'row',
-        gap: 10
     }
 });
 

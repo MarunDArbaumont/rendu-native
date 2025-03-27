@@ -21,21 +21,21 @@ const initTaskList: TTask[] = [
         id: "1",
         title: "Clean the floor",
         description: "Take a mop and clean the floor",
-        category: "Clean",
+        category: "clean",
         is_toggle: false,
     },
     {
         id: "2",
         title: "Clean toilet",
         description: "Take a toothbrush and clean the toilet",
-        category: "Clean",
+        category: "other",
         is_toggle: false,
     },
     {
         id: "3",
         title: "Make diner",
         description: "Make diner",
-        category: "Food",
+        category: "food",
         is_toggle: false,
     },
 ]
@@ -54,14 +54,17 @@ export const TaskProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
 
     const toggleTaskCompletion = (id: string) => {
-        setTasks(taskList.map(task =>
-            task.id === id ? { ...task, is_toggle: !task.is_toggle } : task
-        ));
+        setTasks(prevTasks =>
+            prevTasks.map(task =>
+                task.id === id ? { ...task, is_toggle: !task.is_toggle } : task
+            )
+        );
     };
 
     const deleteTask = (id: string) => {
-        setTasks(taskList.filter(task => task.id !== id));
-    }
+        setTasks(prevTasks => prevTasks.filter(task => task.id !== id));
+    };
+
 
     useEffect(() => {
         console.log(JSON.stringify(taskList, null, 2));

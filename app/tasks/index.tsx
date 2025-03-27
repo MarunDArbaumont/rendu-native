@@ -2,6 +2,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import React, { useCallback, useState } from 'react'
 import { useTasksContext } from '@/provider/TaskProvider'
 import { router } from 'expo-router';
+import Dropdown from '@/components/DropdownCategory';
 
 const AddTask = () => {
 
@@ -16,10 +17,10 @@ const AddTask = () => {
 
     const onValidTask = useCallback(() => {
 
-        if (!title || !description) return
+        if (!title || !description || !category) return
 
         const newTask = {
-            id: "'id" + taskList.length + 1,
+            id: "'id" + (taskList.length + 1),
             title,
             description,
             category,
@@ -29,14 +30,14 @@ const AddTask = () => {
         addTask(newTask)
 
         router.back()
-    }, [title, description])
+    }, [title, description, category])
 
     return (
         <View style={styles.container}>
             <View style={styles.form}>
                 <Text style={styles.title}>Add Task</Text>
-                <View>
-                    <Text>Title</Text>
+                <View style={styles.innerFrom}>
+                    <Text style={styles.label}>Title</Text>
                     <TextInput
                         style={styles.textInput}
                         placeholder="Title"
@@ -44,8 +45,8 @@ const AddTask = () => {
                         onChangeText={setTitle}
                     />
                 </View>
-                <View>
-                    <Text>Description</Text>
+                <View style={styles.innerFrom}>
+                    <Text style={styles.label}>Description</Text>
                     <TextInput
                         style={styles.textInput}
                         placeholder="Description"
@@ -53,17 +54,19 @@ const AddTask = () => {
                         onChangeText={setDescription}
                     />
                 </View>
-                <View>
-                    <Text>Category</Text>
-                    <TextInput
-                        style={styles.textInput}
+                <View style={styles.innerFrom}>
+                    <Text style={styles.label}>Category</Text>
+                    <Dropdown data={[
+                        { value: "clean", label: "Clean" },
+                        { value: "food", label: "Food" },
+                        { value: "other", label: "Other" },
+                    ]}
+                        onChange={setCategory}
                         placeholder="Category"
-                        value={category}
-                        onChangeText={setCategory}
                     />
                 </View>
                 <TouchableOpacity onPress={onValidTask} style={styles.button}>
-                    <Text>Submit Task</Text>
+                    <Text style={styles.label}>Submit Task</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -79,12 +82,20 @@ const styles = StyleSheet.create({
     form: {
         flex: 1,
         padding: 10,
-        gap: 5
+        gap: 16
+    },
+    innerFrom: {
+        gap: 8,
+    },
+    label: {
+        fontSize: 16,
     },
     textInput: {
         borderWidth: 1,
         borderColor: 'black',
-        borderRadius: 5
+        borderRadius: 5,
+        backgroundColor: "#fff",
+        height: 50,
     },
     button: {
         width: 100,
